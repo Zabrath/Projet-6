@@ -186,3 +186,29 @@ footer nav ul {
 	margin: 2em
 }
 
+
+.filtres {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    padding-bottom: 25px;
+}
+
+input[type="radio"].filtre-radio {
+    display: none;
+}
+
+input[type="radio"].filtre-radio + label {
+    color: #1D6154;
+    font-weight: 600;
+    font-size: larger;
+    background-color: white;
+    width: auto;
+    padding: 8px 20px 8px 20px;
+    border-radius: 20px;
+    border: #1D6154 2px solid;
+}
+input[type="radio"].filtre-radio:checked + label {
+    color: white;
+    background-color: #1D6154;
+}

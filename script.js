@@ -1,71 +1,143 @@
 /* récupération des class */
 
-let gallerie = document.querySelector(".gallery");
+const gallerie = document.querySelector(".gallery");
+const filtres = document.querySelector(".filtres")
 
-/* fonction async qui utilise l'API Fetch pour récupérer les données des utilisateurs à partir de l'API spécifiée */
+// ======================================================================================  //
+//                              Gallerie                                                  //
+// ===================================================================================== //
 
-// Déclaration de la fonction asynchrone
+
+// Déclaration de la fonction asynchrone (await donc obligation Async)
 async function fetchDataWorks() {
 	const API_URL = "http://localhost:5678/api/works";
-  
+	
 	// Effectue une requête GET sur l'API
 	const response = await fetch(API_URL);
-  
+	
 	// Récupère les données renvoyées par l'API
 	const data = await response.json();
-  
+	
 	// Retourne les données renvoyées par l'API
 	return data;
-  }
-
-
-/* fonction de création de la balise 			<figure>
-				<img src="assets/images/abajour-tahina.png" alt="Abajour Tahina">
-				<figcaption>Abajour Tahina</figcaption>
-			</figure> */
-
-function createFigure(src, alt, textContent) {
-
-  const figure = document.createElement("figure");
-
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = alt;
-
-  const figcaption = document.createElement("figcaption");
-  figcaption.textContent = textContent;
-
-  
-  figure.appendChild(img);
-  figure.appendChild(figcaption);
-  gallerie.appendChild(figure);
-
 }
 
 
-/*  */
+
+/* Fonction pour extraire et appliquer les informations de la BDD au front-end. */
 
 async function affichageWorks(){
 	// Appel de la fonction asynchrone
 	const data = await fetchDataWorks();
 	// Permet d'isoler chaque élément du tableau
-	data.forEach((element) =>{ 
-	// Extraction des éléments 
-	let imgUrl = element.imageUrl
-	let legende = element.title
-	let title = element.title
-
-	createFigure(imgUrl,legende,title)
-});
-
+	let affichages = ``;
+	data.forEach((elements) => {  
+		affichages += `<figure>`;
+		affichages += `<img src="${elements.imageUrl}" alt="${elements.title}">`;
+		affichages += `<figcaption>${elements.title}</figcaption>`;
+		affichages += `</figure>`;
+	});
+	
+	// Ajout du balisage HTML au DOM
+	document.querySelector(".gallery").innerHTML = affichages;
+	
 }
 
+// Appel de la fonction affichageWorks() après que les éléments du DOM ont été chargés
 affichageWorks();
 
 
 
-/* FILTRES */
+// ======================================================================================  //
+//                                 FILTRES                                                //
+// ===================================================================================== //
 
 
 
+async function fetchDataCategories() {
+	const API_URL = "http://localhost:5678/api/categories";
+	
+	// Effectue une requête GET sur l'API
+	const response = await fetch(API_URL);
+	
+	// Récupère les données renvoyées par l'API
+	const data = await response.json();
+	
+	// Retourne les données renvoyées par l'API
+	return data;
+}
 
+fetchDataCategories();
+
+
+
+async function createFiltres() {
+	// Appel de la fonction asynchrone
+	const data = await fetchDataCategories();
+	// Création d'une variable affichages qui contiendra le balisage HTML à afficher
+	let affichages = ``;
+	// Ajout d'un bouton radio par défaut pour afficher toutes les œuvres d'art
+	affichages += `<input type="radio" name="radio" class="filtre-radio" id="0" checked>`;
+	affichages += `<label for="0">Tous</label>`;
+	
+	// Ajout des filtres dynamiques
+	data.forEach((element) => {
+		affichages += `<input type="radio" name="radio" class="filtre-radio" id="${element.id}">`;
+		affichages += `<label for="${element.id}">${element.name}</label>`;
+	});
+	
+	// Ajout du balisage HTML au DOM
+	document.querySelector(".filtres").innerHTML = affichages;
+}
+
+// ======================================================================================  //
+//                         GESTION FILTRES                                                //
+// ===================================================================================== //
+
+// Fonction asynchrone qui affiche les œuvres d'art d'une catégorie donnée
+async function affichageWorksFilters(id) {
+	// Appel de la fonction asynchrone
+	const data = await fetchDataWorks();
+	// Création d'une variable affichages qui contiendra le balisage HTML à afficher
+	let affichages = ``;
+	// Filtrage des données en fonction de l'ID de la catégorie sélectionnée
+	data.filter((dataFiltre) => dataFiltre.categoryId == id)
+	// Parcours des données filtrées et ajout des œuvres d'art au balisage HTML
+	.forEach((categorieFiltre) => {
+		affichages += `<figure>`;
+		affichages += `<img src="${categorieFiltre.imageUrl}" alt="${categorieFiltre.title}">`;
+		affichages += `<figcaption>${categorieFiltre.title}</figcaption>`;
+		affichages += `</figure>`;
+	});
+	
+	// Ajout du balisage HTML au DOM
+	document.querySelector(".gallery").innerHTML = affichages;
+}
+
+async function utilisationFiltre() {
+	// Appel de la fonction asynchrone
+	await createFiltres();
+	
+	
+	// Sélection de tous les éléments input du DOM qui ont une classe "filtres"
+	let selectionDesFiltres = document.querySelectorAll(".filtres input");
+	// Parcours de la variable selectionDesFiltres et ajout d'un événement click à chaque élément input
+	
+	selectionDesFiltres.forEach((btn) => {
+		// Ajout d'un événement click à l'élément input
+		btn.addEventListener("click", async function () {
+			// Récupération de l'ID de la catégorie sélectionnée
+			let id = btn.id;
+			// Appel de la fonction appropriée pour afficher les œuvres d'art
+			if (id == 0) {
+				// Appel de la fonction affichageWorks() pour afficher toutes les œuvres d'art
+				affichageWorks();
+			} else {
+				// Appel de la fonction affichageWorksFilters() pour afficher les œuvres d'art qui appartiennent à la catégorie sélectionnée
+				affichageWorksFilters(id);
+			}
+		});
+	});
+}
+
+utilisationFiltre();
