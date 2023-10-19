@@ -25,21 +25,20 @@ async function fetchDataWorks() {
 
 
 /* Fonction pour extraire et appliquer les informations de la BDD au front-end. */
-
 async function affichageWorks(){
 	// Appel de la fonction asynchrone
 	const data = await fetchDataWorks();
 	// Permet d'isoler chaque élément du tableau
-	let affichages = ``;
-	data.forEach((elements) => {  
-		affichages += `<figure>`;
-		affichages += `<img src="${elements.imageUrl}" alt="${elements.title}">`;
-		affichages += `<figcaption>${elements.title}</figcaption>`;
-		affichages += `</figure>`;
+	let htmlProjets = ``;
+	data.forEach((element) => {  
+		htmlProjets += `<figure>`;
+		htmlProjets += `<img src="${element.imageUrl}" alt="${element.title}">`;
+		htmlProjets += `<figcaption>${element.title}</figcaption>`;
+		htmlProjets += `</figure>`;
 	});
 	
 	// Ajout du balisage HTML au DOM
-	document.querySelector(".gallery").innerHTML = affichages;
+	document.querySelector(".gallery").innerHTML = htmlProjets;
 	
 }
 
@@ -99,19 +98,19 @@ async function affichageWorksFilters(id) {
 	// Appel de la fonction asynchrone
 	const data = await fetchDataWorks();
 	// Création d'une variable affichages qui contiendra le balisage HTML à afficher
-	let affichages = ``;
+	let htmlFiltres = ``;
 	// Filtrage des données en fonction de l'ID de la catégorie sélectionnée
 	data.filter((dataFiltre) => dataFiltre.categoryId == id)
 	// Parcours des données filtrées et ajout des œuvres d'art au balisage HTML
 	.forEach((categorieFiltre) => {
-		affichages += `<figure>`;
-		affichages += `<img src="${categorieFiltre.imageUrl}" alt="${categorieFiltre.title}">`;
-		affichages += `<figcaption>${categorieFiltre.title}</figcaption>`;
-		affichages += `</figure>`;
+		htmlFiltres += `<figure>`;
+		htmlFiltres += `<img src="${categorieFiltre.imageUrl}" alt="${categorieFiltre.title}">`;
+		htmlFiltres += `<figcaption>${categorieFiltre.title}</figcaption>`;
+		htmlFiltres += `</figure>`;
 	});
 	
 	// Ajout du balisage HTML au DOM
-	document.querySelector(".gallery").innerHTML = affichages;
+	document.querySelector(".gallery").innerHTML = htmlFiltres;
 }
 
 async function utilisationFiltre() {
@@ -122,7 +121,6 @@ async function utilisationFiltre() {
 	// Sélection de tous les éléments input du DOM qui ont une classe "filtres"
 	let selectionDesFiltres = document.querySelectorAll(".filtres input");
 	// Parcours de la variable selectionDesFiltres et ajout d'un événement click à chaque élément input
-	
 	selectionDesFiltres.forEach((btn) => {
 		// Ajout d'un événement click à l'élément input
 		btn.addEventListener("click", async function () {
@@ -141,3 +139,14 @@ async function utilisationFiltre() {
 }
 
 utilisationFiltre();
+
+
+
+
+
+// ======================================================================================  //
+//                         LOGIN                                                          //
+// ===================================================================================== //
+
+
+
