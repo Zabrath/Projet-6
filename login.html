@@ -31,16 +31,17 @@
 	<section id="contact">
 
 	<h2>Log in</h2>
-
-	  <form action="">
+	<div class="error"></div>
+	<form class="formulaire-login" action="/connexion" method="get">
 		<label for="email">Email</label>
-		<input type="email" name="email" id="email">		
+		<input type="email" name="email" id="mail">		
 		<label for="mdp">Mot de passe</label>
-		<input type="text" name="name" id="name">
+		<input type="password" name="password" id="pass">
 		<input type="submit" value="Se connecter">
 		<a href="">mot de passe oublié</a>
 	</form>
 	</section>
+
 </main>
 
 <footer>
@@ -50,6 +51,6 @@
 		</ul>
 	</nav>
 </footer>
-
+<script src="./login.js"></script>
 </body>
 </html>

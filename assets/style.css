@@ -31,7 +31,6 @@ article, aside, details, figcaption, figure,
 body {
 	line-height: 1;
 	background-color: #FFFEF8;
-	min-height: 100vh;
 
 }
 ol, ul {
@@ -212,14 +211,14 @@ input[type="radio"].filtre-radio + label {
     color: #1D6154;
     font-weight: 600;
     font-size: larger;
-    background-color: white;
+    background-color: #FFFEF8;
     width: auto;
     padding: 8px 20px 8px 20px;
     border-radius: 20px;
     border: #1D6154 2px solid;
 }
 input[type="radio"].filtre-radio:checked + label {
-    color: white;
+    color: #FFFEF8;
     background-color: #1D6154;
 }
 
@@ -257,6 +256,7 @@ input[type="radio"].filtre-radio:checked + label {
 		font-style: normal;
 		font-weight: 300;
 		line-height: normal;
+		font-family: 'Work Sans';
 	  }
 	
 

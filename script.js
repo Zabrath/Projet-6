@@ -9,25 +9,20 @@ const filtres = document.querySelector(".filtres")
 
 
 // Déclaration de la fonction asynchrone (await donc obligation Async)
-async function fetchDataWorks() {
-	const API_URL = "http://localhost:5678/api/works";
+async function fetchData(URL) {
+	
 	
 	// Effectue une requête GET sur l'API
-	const response = await fetch(API_URL);
-	
-	// Récupère les données renvoyées par l'API
-	const data = await response.json();
+	const response = await fetch(URL);
 	
 	// Retourne les données renvoyées par l'API
-	return data;
+	return await response.json();
 }
-
-
 
 /* Fonction pour extraire et appliquer les informations de la BDD au front-end. */
 async function affichageWorks(){
 	// Appel de la fonction asynchrone
-	const data = await fetchDataWorks();
+	const data = await fetchData("http://localhost:5678/api/works");
 	// Permet d'isoler chaque élément du tableau
 	let htmlProjets = ``;
 	data.forEach((element) => {  
@@ -51,28 +46,9 @@ affichageWorks();
 //                                 FILTRES                                                //
 // ===================================================================================== //
 
-
-
-async function fetchDataCategories() {
-	const API_URL = "http://localhost:5678/api/categories";
-	
-	// Effectue une requête GET sur l'API
-	const response = await fetch(API_URL);
-	
-	// Récupère les données renvoyées par l'API
-	const data = await response.json();
-	
-	// Retourne les données renvoyées par l'API
-	return data;
-}
-
-fetchDataCategories();
-
-
-
 async function createFiltres() {
 	// Appel de la fonction asynchrone
-	const data = await fetchDataCategories();
+	const data = await fetchData("http://localhost:5678/api/categories");
 	// Création d'une variable affichages qui contiendra le balisage HTML à afficher
 	let affichages = ``;
 	// Ajout d'un bouton radio par défaut pour afficher toutes les œuvres d'art
@@ -96,7 +72,7 @@ async function createFiltres() {
 // Fonction asynchrone qui affiche les œuvres d'art d'une catégorie donnée
 async function affichageWorksFilters(id) {
 	// Appel de la fonction asynchrone
-	const data = await fetchDataWorks();
+	const data = await fetchData("http://localhost:5678/api/works");
 	// Création d'une variable affichages qui contiendra le balisage HTML à afficher
 	let htmlFiltres = ``;
 	// Filtrage des données en fonction de l'ID de la catégorie sélectionnée
