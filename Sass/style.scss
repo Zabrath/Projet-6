@@ -1,3 +1,6 @@
+@use "includes/login";
+@use "includes/footer";
+
 /* http://meyerweb.com/eric/tools/css/reset/
    v2.0 | 20110126
    License: none (public domain)
@@ -22,16 +25,16 @@ time, mark, audio, video {
 	font-size: 100%;
 	font: inherit;
 	vertical-align: baseline;
+	
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
- header, hgroup, menu, nav, section {
+footer, header, hgroup, menu, nav, section {
 	display: block;
 }
 body {
 	line-height: 1;
 	background-color: #FFFEF8;
-
 }
 ol, ul {
 	list-style: none;
@@ -50,20 +53,20 @@ table {
 }
 /** end reset css**/
 body {
-	max-width: 1440px;
-	margin: auto;
-	font-family: 'Work Sans';
+	max-width: 1140px;
+	margin:auto;
+	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
 header {
 	display: flex;
 	justify-content: space-between;
-	margin-bottom: 50px;
-	margin-top: 50px;
+	margin: 50px 0
 }
 section {
 	margin: 50px 0
 }
+
 h1{
 	display: flex;
 	flex-direction: column;
@@ -87,7 +90,6 @@ h2{
 	color: #1D6154
 }
 nav ul {
-
 	display: flex;
 	align-items: center;
 	list-style-type: none;
@@ -104,7 +106,6 @@ li:hover {
 #introduction {
 	display: flex;
 	align-items: center;
-	margin-bottom: 50px;
 }
 #introduction figure {
 	flex: 1
@@ -125,11 +126,6 @@ li:hover {
 #introduction p {
 	margin-bottom: 0.5em;
 }
-
-#portfolio {
-	margin-bottom: 50px;
-}
-
 #portfolio h2 {
 	text-align: center;
 	margin-bottom: 1em;
@@ -147,8 +143,8 @@ li:hover {
 
 }
 #contact {
-	margin: auto;
 	width: 50%;
+margin: auto;
 }
 #contact > * {
 	text-align: center;
@@ -181,20 +177,13 @@ li:hover {
 input[type="submit"]{
 	font-family: 'Syne';
 	font-weight: 700;
-	color: white;
+	color: #FFFEF8;
 	background-color: #1D6154;
 	margin : 2em auto ;
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
 }
-
-footer nav ul {
-	display: flex;
-	justify-content: flex-end;
-	margin: 2em
-}
-
 
 .filtres {
     display: flex;
@@ -237,7 +226,6 @@ input[type="radio"].filtre-radio:checked + label {
 	border: none;
 	background-color: transparent;
   }
-
 
 	
 

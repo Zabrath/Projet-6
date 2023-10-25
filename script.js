@@ -1,5 +1,3 @@
-export let test = 668;
-
 /* récupération des class */
 
 const gallerie = document.querySelector(".gallery");
