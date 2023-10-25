@@ -16,15 +16,6 @@ formulaireLogin.addEventListener("submit", async function (event){
   // Prévention du rechargement de la page
   event.preventDefault();
   
-  // Vérification que l'élément input existe et qu'il n'est pas null
-  if (email === null || password === null) {
-    // Affichage d'un message d'erreur
-    const errorElement = document.querySelector(".error");
-    errorElement.innerHTML = "L'adresse e-mail et le mot de passe sont incorrect.";
-    return;
-  }
-  
-  
   const login = {
     email: document.querySelector("input[name='email']").value,
     password: document.querySelector("input[name='password']").value
@@ -59,7 +50,7 @@ if (data.hasOwnProperty("token")) {
 } else {
   
   const errorElement = document.querySelector(".error");
-  errorElement.innerHTML = `Erreur de connexion : ${data.error}`;
+  errorElement.innerHTML = `Erreur dans l’identifiant ou le mot de passe`;
 }
 });
 
