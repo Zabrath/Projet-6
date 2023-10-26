@@ -4,6 +4,7 @@
 const formulaireLogin = document.querySelector(".JS-formulaire-login");
 const email = document.querySelector("#mail");
 const password = document.querySelector("#pass");
+// const admin = document.getElementById('admin_test');
 
 
 formulaireLogin.addEventListener("submit", async function (event){
@@ -35,8 +36,9 @@ const data = await response.json();
 if (data.hasOwnProperty("token")) {
   
   localStorage.setItem("token", data.token);
-
+  
   window.location.href = "./index.html";
+ 
 
 } else {
   
@@ -44,4 +46,3 @@ if (data.hasOwnProperty("token")) {
   errorElement.innerHTML = `Erreur dans l’identifiant ou le mot de passe`;
 }
 });
-

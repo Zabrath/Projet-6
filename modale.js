@@ -3,9 +3,12 @@ const focusableSelector = 'button, a, input, textarea'
 let focusables = []
 let previouslyFocusedElement = null
 
-const openmodale = function (event) {
+
+
+const openmodale = async function (event) {
     event.preventDefault()
-    modal = document.querySelector(event.target.getAttribute('href'))
+    // modal = document.querySelector(event.target.getAttribute('href'))
+    modal = await loadModal()
     focusables = Array.from(modal.querySelectorAll(focusableSelector))
     previouslyFocusedElement = document.querySelector(':focus')
     modal.style.display = null
@@ -51,6 +54,19 @@ const focusInModal = function (event) {
         index = focusables.length -1
     }
     focusables[index].focus()
+}
+
+const loadModal = async function (url) {
+    const target = document.querySelector('a.js-modal').getAttribute('href');
+    const reponse = await fetch("http://localhost:5678/api/works");  
+    const tableau = await reponse.json();
+    const html = tableau.map(product => product.imageUrl);
+    // const element = document.createRange().createContextualFragment(html).querySelector(target);
+    // if (element === null) throw `L'élément ${target} n'a pas été trouvé dans la page ${url}`;
+    // return element
+
+    console.log(target ,html);
+
 }
 
 document.querySelectorAll('.js-modal').forEach(a => {
