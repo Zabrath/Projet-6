@@ -12,7 +12,7 @@ form a {
 }
 
 footer {
-  background-color: white;
+  background-color: #FFFEF8;
   height: 60px;
 }
 
@@ -27,6 +27,28 @@ footer nav ul {
   font-style: normal;
   font-weight: 300;
   line-height: normal;
+}
+
+.modal {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.modal-wrapper {
+  overflow: auto;
+  width: 630px;
+  height: 688px;
+  max-width: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
+  padding: 20px;
+  background-color: #FFFEF8;
 }
 
 /* http://meyerweb.com/eric/tools/css/reset/

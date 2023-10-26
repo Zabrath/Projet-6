@@ -22,17 +22,18 @@
 			<li>
 				<a href="login.html">Login</a>
 			</li>
-			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
+			<li>
+				<a href="https://www.instagram.com/" target="_blank"><img src="./assets/icons/instagram.png" alt="Instagram"></a>
+			</li>
 		</ul>
 	</nav>
 </header>
-<div class="login__container">
 <main class="login__main">
 	<section id="contact">
 
-	<h2 class="login__titre">Log in</h2>
-	<div class="error"></div>
-	<form class="formulaire-login" action="/connexion" method="POST">
+	<h2>Log in</h2>
+	<div class="JS-error"></div>
+	<form class="JS-formulaire-login" action="/connexion" method="POST">
 		<label for="email">Email</label>
 		<input type="email" name="email" id="mail">		
 		<label for="mdp">Mot de passe</label>
@@ -51,7 +52,6 @@
 		</ul>
 	</nav>
 </footer>
-</div>
 <script src="./login.js" type="module"></script>
 </body>
 </html>

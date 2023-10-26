@@ -1,7 +1,7 @@
 // // sophie.bluel@test.tld S0phie 
 
 // Récupération des éléments du formulaire
-const formulaireLogin = document.querySelector(".formulaire-login");
+const formulaireLogin = document.querySelector(".JS-formulaire-login");
 const email = document.querySelector("#mail");
 const password = document.querySelector("#pass");
 
@@ -40,7 +40,7 @@ if (data.hasOwnProperty("token")) {
 
 } else {
   
-  const errorElement = document.querySelector(".error");
+  const errorElement = document.querySelector(".JS-error");
   errorElement.innerHTML = `Erreur dans l’identifiant ou le mot de passe`;
 }
 });
