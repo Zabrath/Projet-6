@@ -46,3 +46,6 @@ if (data.hasOwnProperty("token")) {
   errorElement.innerHTML = `Erreur dans l’identifiant ou le mot de passe`;
 }
 });
+
+
+

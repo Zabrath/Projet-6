@@ -26,7 +26,7 @@ async function affichageWorks(){
 	// Permet d'isoler chaque élément du tableau
 	let htmlProjets = ``;
 	data.forEach((element) => {  
-		htmlProjets += `<figure>`;
+		htmlProjets += `<figure data-projet="${element.id}">`;
 		htmlProjets += `<img src="${element.imageUrl}" alt="${element.title}">`;
 		htmlProjets += `<figcaption>${element.title}</figcaption>`;
 		htmlProjets += `</figure>`;

@@ -3,12 +3,20 @@ const focusableSelector = 'button, a, input, textarea'
 let focusables = []
 let previouslyFocusedElement = null
 
+if (!window.localStorage.getItem("token")) {
 
+    const adminBtn = document.querySelector('.admin-btn');
+    adminBtn.remove();
+    const displayAdmin = document.querySelector('.admin-overlay')
+    displayAdmin.remove()
+
+  }
 
 const openmodale = async function (event) {
     event.preventDefault()
-    // modal = document.querySelector(event.target.getAttribute('href'))
-    modal = await loadModal()
+    modal = document.querySelector(event.target.getAttribute('href'))
+    // modal = await loadModal()
+    loadModal()
     focusables = Array.from(modal.querySelectorAll(focusableSelector))
     previouslyFocusedElement = document.querySelector(':focus')
     modal.style.display = null
@@ -31,7 +39,7 @@ const closeModal = function (event) {
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
     modal.querySelector('.js-modal-stop').removeEventListener('click', closeModal)
     modal = null
-
+    
 }
 
 const stopPropagation = function (event) {
@@ -56,17 +64,43 @@ const focusInModal = function (event) {
     focusables[index].focus()
 }
 
-const loadModal = async function (url) {
-    const target = document.querySelector('a.js-modal').getAttribute('href');
+const loadModal = async function () {
     const reponse = await fetch("http://localhost:5678/api/works");  
-    const tableau = await reponse.json();
-    const html = tableau.map(product => product.imageUrl);
-    // const element = document.createRange().createContextualFragment(html).querySelector(target);
-    // if (element === null) throw `L'élément ${target} n'a pas été trouvé dans la page ${url}`;
-    // return element
+    const tableau = await reponse.json();    
+    // Permet d'isoler chaque élément du tableau
+    let galleryModale = ``;
+    
+    await tableau.forEach((element) => {
+        galleryModale += `<div data-projet="${element.id}" class="vignette">`;
+        galleryModale += `<img src="${element.imageUrl}" alt="${element.title}">`;
+        galleryModale += `<button class="vignette__btn">X</button>`;
+        galleryModale += `</div>`;
+    });
 
-    console.log(target ,html);
+    document.querySelector(".modal-wrapper_img").innerHTML = galleryModale;
+    
+    const button = document.querySelectorAll('button');
+    
+    button.forEach(function(boutonDOM) {
+        boutonDOM.addEventListener('click', function(event){
+            // Je récupère l'ID du projet acollé au bouton
+            let projetID = boutonDOM.parentNode.dataset.projet;
 
+            // Requête API pour delete le projet ayant le projetID
+            // si l'API te renvoi "ok" alors effectue la suite du code 
+            // sinon log d'erreur.
+
+
+            const projetASupprimer = document.querySelectorAll(`[data-projet="${projetID}"]`);
+            
+            projetASupprimer.forEach(function(elementASupprimer){
+                elementASupprimer.remove();
+            })
+        })
+    })
+    
+    // console.log(galleryModale);
+    
 }
 
 document.querySelectorAll('.js-modal').forEach(a => {
@@ -75,12 +109,12 @@ document.querySelectorAll('.js-modal').forEach(a => {
 })
 
 window.addEventListener('keydown', function (event) {
-   if (event.key === "Escape" || event.key === "Esc") {
-    closeModal(event)
-   }
-
-   if (event.key === 'Tab' && modal !== null) {
-    focusInModal(event)
-   }
+    if (event.key === "Escape" || event.key === "Esc") {
+        closeModal(event)
+    }
+    
+    if (event.key === 'Tab' && modal !== null) {
+        focusInModal(event)
+    }
 })
 

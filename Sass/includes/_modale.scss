@@ -18,5 +18,14 @@
     max-height: calc(100vh - 20px);
     padding: 20px;
     background-color: #FFFEF8;
+}
 
+.modal-wrapper_img {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+}
+
+.modal-wrapper img {
+    width: 350px;
 }
