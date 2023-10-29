@@ -4,13 +4,13 @@ let focusables = []
 let previouslyFocusedElement = null
 
 if (!window.localStorage.getItem("token")) {
-
+    
     const adminBtn = document.querySelector('.admin-btn');
     adminBtn.remove();
     const displayAdmin = document.querySelector('.admin-overlay')
     displayAdmin.remove()
-
-  }
+    
+}
 
 const openmodale = async function (event) {
     event.preventDefault()
@@ -76,7 +76,7 @@ const loadModal = async function () {
         galleryModale += `<button class="vignette__btn">X</button>`;
         galleryModale += `</div>`;
     });
-
+    
     document.querySelector(".modal-wrapper_img").innerHTML = galleryModale;
     
     const button = document.querySelectorAll('button');
@@ -85,22 +85,30 @@ const loadModal = async function () {
         boutonDOM.addEventListener('click', function(event){
             // Je récupère l'ID du projet acollé au bouton
             let projetID = boutonDOM.parentNode.dataset.projet;
-
-            // Requête API pour delete le projet ayant le projetID
-            // si l'API te renvoi "ok" alors effectue la suite du code 
-            // sinon log d'erreur.
-
-
-            const projetASupprimer = document.querySelectorAll(`[data-projet="${projetID}"]`);
+                    // Requête API pour delete le projet ayant le projetID
+          fetch(`http://localhost:5678/api/works/${projetID}`, {
+            method: "DELETE",
+            headers: {
+                accept: "application/json",
+                "Content-type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("token")}`
+            },
             
-            projetASupprimer.forEach(function(elementASupprimer){
-                elementASupprimer.remove();
-            })
+            
+        });
+        // sinon log d'erreur.
+        
+        
+        const projetASupprimer = document.querySelectorAll(`[data-projet="${projetID}"]`);
+        
+        projetASupprimer.forEach(function(elementASupprimer){
+            elementASupprimer.remove();
         })
     })
-    
-    // console.log(galleryModale);
-    
+})
+
+// console.log(galleryModale);
+
 }
 
 document.querySelectorAll('.js-modal').forEach(a => {
