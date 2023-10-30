@@ -3,6 +3,7 @@ const focusableSelector = 'button, a, input, textarea'
 let focusables = []
 let previouslyFocusedElement = null
 
+
 if (!window.localStorage.getItem("token")) {
     
     const adminBtn = document.querySelector('.admin-btn');
@@ -72,14 +73,16 @@ const loadModal = async function () {
     
     await tableau.forEach((element) => {
         galleryModale += `<div data-projet="${element.id}" class="vignette">`;
-        galleryModale += `<img src="${element.imageUrl}" alt="${element.title}">`;
-        galleryModale += `<button class="vignette__btn">X</button>`;
+        galleryModale += `<img class="vignette__img" src="${element.imageUrl}" alt="${element.title}">`;
+        galleryModale += `<i class="fa-solid fa-trash-can"></i>`;
         galleryModale += `</div>`;
     });
+
+
     
     document.querySelector(".modal-wrapper_img").innerHTML = galleryModale;
     
-    const button = document.querySelectorAll('button');
+    const button = document.querySelectorAll('i');
     
     button.forEach(function(boutonDOM) {
         boutonDOM.addEventListener('click', function(event){
@@ -96,7 +99,7 @@ const loadModal = async function () {
             
             
         });
-        // sinon log d'erreur.
+        
         
         
         const projetASupprimer = document.querySelectorAll(`[data-projet="${projetID}"]`);
