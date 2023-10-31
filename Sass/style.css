@@ -60,6 +60,7 @@ footer nav ul {
   border: none;
   background-color: transparent;
   margin-bottom: 50px;
+  cursor: pointer;
 }
 
 .modal-wrapper__title {
@@ -98,6 +99,11 @@ footer nav ul {
   background-color: black;
   padding: 5px;
   border-radius: 20%;
+}
+
+.ajout__btn {
+  position: relative;
+  background-color: green;
 }
 
 #admin-btn {

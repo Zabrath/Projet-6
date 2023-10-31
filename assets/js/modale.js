@@ -9,14 +9,12 @@ if (!window.localStorage.getItem("token")) {
     const adminBtn = document.querySelector('.admin-btn');
     adminBtn.remove();
     const displayAdmin = document.querySelector('.admin-overlay')
-    displayAdmin.remove()
-    
+    displayAdmin.remove()    
 }
 
 const openmodale = async function (event) {
     event.preventDefault()
     modal = document.querySelector(event.target.getAttribute('href'))
-    // modal = await loadModal()
     loadModal()
     focusables = Array.from(modal.querySelectorAll(focusableSelector))
     previouslyFocusedElement = document.querySelector(':focus')
@@ -36,7 +34,7 @@ const closeModal = function (event) {
     modal.style.display = "none"
     // modal.setAttribute('aria-hidden', 'true')
     // modal.removeAttribute('aria-modal')
-    // modal.removeEventListener('click', closeModal)
+    modal.removeEventListener('click', closeModal)
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
     modal.querySelector('.js-modal-stop').removeEventListener('click', closeModal)
     modal = null
@@ -77,9 +75,7 @@ const loadModal = async function () {
         galleryModale += `<i class="fa-solid fa-trash-can"></i>`;
         galleryModale += `</div>`;
     });
-
-
-    
+ 
     document.querySelector(".modal-wrapper_img").innerHTML = galleryModale;
     
     const button = document.querySelectorAll('i');
@@ -89,18 +85,16 @@ const loadModal = async function () {
             // Je récupère l'ID du projet acollé au bouton
             let projetID = boutonDOM.parentNode.dataset.projet;
                     // Requête API pour delete le projet ayant le projetID
-          fetch(`http://localhost:5678/api/works/${projetID}`, {
-            method: "DELETE",
-            headers: {
-                accept: "application/json",
-                "Content-type": "application/json",
-                authorization: `Bearer ${localStorage.getItem("token")}`
-            },
+        //   fetch(`http://localhost:5678/api/works/${projetID}`, {
+        //     method: "DELETE",
+        //     headers: {
+        //         accept: "application/json",
+        //         "Content-type": "application/json",
+        //         authorization: `Bearer ${localStorage.getItem("token")}`
+        //     },
             
             
-        });
-        
-        
+        // });
         
         const projetASupprimer = document.querySelectorAll(`[data-projet="${projetID}"]`);
         
@@ -108,11 +102,7 @@ const loadModal = async function () {
             elementASupprimer.remove();
         })
     })
-})
-
-// console.log(galleryModale);
-
-}
+})}
 
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', openmodale)
