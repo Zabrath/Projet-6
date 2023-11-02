@@ -13,6 +13,9 @@ if (!window.localStorage.getItem("token")) {
 }
 
 const openmodale = async function (event) {
+    // if (modal !== null){
+    //     closeModal();
+    // }
     event.preventDefault()
     modal = document.querySelector(event.target.getAttribute('href'))
     loadModal()
@@ -30,6 +33,7 @@ const openmodale = async function (event) {
 const closeModal = function (event) {
     if (modal === null) return
     if (previouslyFocusedElement !== null) previouslyFocusedElement.focus()
+    // if (event !== undefined) event.preventDefault();
     event.preventDefault()
     modal.style.display = "none"
     // modal.setAttribute('aria-hidden', 'true')
@@ -119,3 +123,35 @@ window.addEventListener('keydown', function (event) {
     }
 })
 
+// Ajout photo
+
+const form = document.getElementById('MyForm');
+
+form.addEventListener('submit', function(event) {
+  event.preventDefault();
+
+
+  const travaux = document.getElementById('travaux').files[0];
+  const categorie = document.getElementById('categorie').value;
+  const title = document.getElementById('title').value;
+
+
+  const formData = new FormData();
+  formData.append('travaux', travaux);
+  formData.append('categorie', categorie);
+  formData.append('title', title);
+
+
+  fetch('http://localhost:5678/api/works', {
+    method: 'POST',
+    body: formData,
+  })
+  .then(response => response.json())
+  .then(data => {
+    console.log(data); 
+
+  })
+//   .catch(error => {
+//     console.error('Erreur:', error);
+//   });
+});

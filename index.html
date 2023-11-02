@@ -64,7 +64,7 @@
 					<button class="js-modal-close modal-wrapper__close"><i class="fa-solid fa-xmark"></i></button>
 					<p class="modal-wrapper__title">Ajout photo</p>
 					<div>
-						<form>
+						<form id = "Myform" action="http://localhost:5678/api/works" method="POST" enctype="multipart/form-data">
 							<div>
 								<label for="travaux">Ajouter une photo:</label>
 								<input type="file" id="travaux" name="travaux" accept="image/png, image/jpeg" />

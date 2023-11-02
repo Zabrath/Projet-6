@@ -83,6 +83,22 @@
 
 .ajout__btn{
     position: relative;
-    background-color: green;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    width: 237px;
+    height: 36px;
+    border-radius: 60px;
+    background: #1D6154;
+    color: #FFF;
+    text-decoration: none;
+
+    text-align: center;
+    font-family: 'Syne';
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
 
