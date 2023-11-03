@@ -125,33 +125,24 @@ window.addEventListener('keydown', function (event) {
 
 // Ajout photo
 
-const form = document.getElementById('MyForm');
+const form = document.getElementById('Myform');
 
-form.addEventListener('submit', function(event) {
+form.addEventListener('submit', async function(event) {
   event.preventDefault();
 
-
-  const travaux = document.getElementById('travaux').files[0];
-  const categorie = document.getElementById('categorie').value;
-  const title = document.getElementById('title').value;
+  const formData = new FormData(this);
 
 
-  const formData = new FormData();
-  formData.append('travaux', travaux);
-  formData.append('categorie', categorie);
-  formData.append('title', title);
-
-
-  fetch('http://localhost:5678/api/works', {
+  const fetchCreation = await fetch('http://localhost:5678/api/works', {
     method: 'POST',
     body: formData,
+    headers: {
+      authorization: `Bearer ${localStorage.getItem("token")}`
+    }
   })
-  .then(response => response.json())
-  .then(data => {
-    console.log(data); 
+  
+  const data = await fetchCreation.json()
 
-  })
-//   .catch(error => {
-//     console.error('Erreur:', error);
-//   });
+  console.log(data);
+
 });

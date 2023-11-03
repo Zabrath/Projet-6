@@ -67,18 +67,18 @@
 						<form id = "Myform" action="http://localhost:5678/api/works" method="POST" enctype="multipart/form-data">
 							<div>
 								<label for="travaux">Ajouter une photo:</label>
-								<input type="file" id="travaux" name="travaux" accept="image/png, image/jpeg" />
+								<input type="file" id="travaux" name="image" accept="image/png, image/jpeg" />
 								<label for="categorie">Catégorie</label>
-								<select id="categorie">
+								<select name="categorie" id="categorie">
 									<option></option>
-									<option>Objet</option>
-									<option>Appartement</option>
-									<option>Hotel & restaurant</option>
+									<option value="1">Objet</option>
+									<option value="2">Appartement</option>
+									<option value="3">Hotel & restaurant</option>
 								</select>
 							</div>
 							<div>
 								<label for="title">Titre</label>
-								<input type="text" id="title" placeholder="Titre">
+								<input type="text" name="title" id="title" placeholder="Titre">
 							</div>
 							<button type="submit">Valider</button>
 						</form>
