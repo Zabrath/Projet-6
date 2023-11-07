@@ -13,9 +13,9 @@ if (!window.localStorage.getItem("token")) {
 }
 
 const openmodale = async function (event) {
-    // if (modal !== null){
-    //     closeModal();
-    // }
+    if (modal !== null){
+        closeModal();
+    }
     event.preventDefault()
     modal = document.querySelector(event.target.getAttribute('href'))
     loadModal()
@@ -33,8 +33,7 @@ const openmodale = async function (event) {
 const closeModal = function (event) {
     if (modal === null) return
     if (previouslyFocusedElement !== null) previouslyFocusedElement.focus()
-    // if (event !== undefined) event.preventDefault();
-    event.preventDefault()
+    if (event !== undefined) event.preventDefault();
     modal.style.display = "none"
     // modal.setAttribute('aria-hidden', 'true')
     // modal.removeAttribute('aria-modal')
@@ -89,16 +88,16 @@ const loadModal = async function () {
             // Je récupère l'ID du projet acollé au bouton
             let projetID = boutonDOM.parentNode.dataset.projet;
                     // Requête API pour delete le projet ayant le projetID
-        //   fetch(`http://localhost:5678/api/works/${projetID}`, {
-        //     method: "DELETE",
-        //     headers: {
-        //         accept: "application/json",
-        //         "Content-type": "application/json",
-        //         authorization: `Bearer ${localStorage.getItem("token")}`
-        //     },
+          fetch(`http://localhost:5678/api/works/${projetID}`, {
+            method: "DELETE",
+            headers: {
+                accept: "application/json",
+                "Content-type": "application/json",
+                authorization: `Bearer ${localStorage.getItem("token")}`
+            },
             
             
-        // });
+        });
         
         const projetASupprimer = document.querySelectorAll(`[data-projet="${projetID}"]`);
         
@@ -130,19 +129,49 @@ const form = document.getElementById('Myform');
 form.addEventListener('submit', async function(event) {
   event.preventDefault();
 
-  const formData = new FormData(this);
+// vérification formulaire remplit
 
+   const formData = new FormData(this);
+   let isFormValid = true;
+ 
+   for (let value of formData.values()) {
+     if (!value) {
+       isFormValid = false;
+       break;
+     }
+   }
+ 
+   const travaux = document.getElementById('travaux');
+   if (!travaux.files.length) {
+     isFormValid = false;
+   }
+ 
+   if (!isFormValid) {
+     alert("Tous les champs, y compris le fichier, doivent être remplis !");
+     return;
+   }
 
+  // Si tous les champs sont remplis, procéder à l'envoi des données
   const fetchCreation = await fetch('http://localhost:5678/api/works', {
     method: 'POST',
     body: formData,
     headers: {
       authorization: `Bearer ${localStorage.getItem("token")}`
     }
-  })
+  });
   
-  const data = await fetchCreation.json()
+  const data = await fetchCreation.json();
+  let htmlProjets = ``;
+
+  htmlProjets += `<figure data-projet="${data.id}">`;
+  htmlProjets += `<img src="${data.imageUrl}" alt="${data.title}">`;
+  htmlProjets += `<figcaption>${data.title}</figcaption>`;
+  htmlProjets += `</figure>`;
+
+  document.querySelector(".gallery").innerHTML += htmlProjets;
 
   console.log(data);
 
+  closeModal();
 });
+
