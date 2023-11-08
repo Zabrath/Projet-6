@@ -13,35 +13,16 @@ if (!window.localStorage.getItem("token")) {
     displayAdmin.remove()    
 }
 
-// const openmodale = async function (event) {
-//     if (modal !== null){
-//         closeModal();
-//     }
-//     event.preventDefault()
-//     modal = document.querySelector(event.target.getAttribute('href'))
-//     loadModal()
-//     focusables = Array.from(modal.querySelectorAll(focusableSelector))
-//     previouslyFocusedElement = document.querySelector(':focus')
-//     modal.style.display = null
-//     focusables[0].focus()
-//     // modal.setAttribute('aria-hidden', false) // target.removeAttribute('aria-hidden')
-//     // modal.setAttribute('aria-modal', 'true')
-//     modal.addEventListener('click', closeModal)
-//     modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
-//     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
-// }
-
-const openmodale = async function (event) {
+const openModale = async function (event) {
     if (isModalOpen) {
         closeModal();
     }
     event.preventDefault();
-
+    
     modal = document.querySelector(event.target.getAttribute('href'));
     if (modal !== null) {
         loadModal();
-
-        // Reste du code pour ouvrir la modal
+        
         focusables = Array.from(modal.querySelectorAll(focusableSelector));
         previouslyFocusedElement = document.querySelector(':focus');
         modal.style.display = null;
@@ -70,7 +51,7 @@ const closeModal = function (event) {
         isModalOpen = false;
         modal = null;
     }
-
+    
     
 }
 
@@ -108,7 +89,7 @@ const loadModal = async function () {
         galleryModale += `<i class="fa-solid fa-trash-can"></i>`;
         galleryModale += `</div>`;
     });
- 
+    
     document.querySelector(".modal-wrapper_img").innerHTML = galleryModale;
     
     const button = document.querySelectorAll('i');
@@ -117,8 +98,8 @@ const loadModal = async function () {
         boutonDOM.addEventListener('click', function(event){
             // Je récupère l'ID du projet acollé au bouton
             let projetID = boutonDOM.parentNode.dataset.projet;
-                    // Requête API pour delete le projet ayant le projetID
-          fetch(`http://localhost:5678/api/works/${projetID}`, {
+            // Requête API pour delete le projet ayant le projetID
+            fetch(`http://localhost:5678/api/works/${projetID}`, {
             method: "DELETE",
             headers: {
                 accept: "application/json",
@@ -138,7 +119,7 @@ const loadModal = async function () {
 })}
 
 document.querySelectorAll('.js-modal').forEach(a => {
-    a.addEventListener('click', openmodale)
+    a.addEventListener('click', openModale)
     
 })
 
@@ -157,52 +138,52 @@ window.addEventListener('keydown', function (event) {
 const form = document.getElementById('Myform');
 
 form.addEventListener('submit', async function(event) {
-  event.preventDefault();
-
-// vérification formulaire remplit
-
-   const formData = new FormData(this);
-   let isFormValid = true;
- 
-   for (let value of formData.values()) {
-     if (!value) {
-       isFormValid = false;
-       break;
-     }
-   }
- 
-   const travaux = document.getElementById('travaux');
-   if (!travaux.files.length) {
-     isFormValid = false;
-   }
- 
-   if (!isFormValid) {
-     alert("Tous les champs, y compris le fichier, doivent être remplis !");
-     return;
-   }
-
-  // Si tous les champs sont remplis, procéder à l'envoi des données
-  const fetchCreation = await fetch('http://localhost:5678/api/works', {
+    event.preventDefault();
+    
+    // vérification formulaire remplit
+    
+    const formData = new FormData(this);
+    let isFormValid = true;
+    
+    for (let value of formData.values()) {
+        if (!value) {
+            isFormValid = false;
+            break;
+        }
+    }
+    
+    const travaux = document.getElementById('travaux');
+    if (!travaux.files.length) {
+        isFormValid = false;
+    }
+    
+    if (!isFormValid) {
+        alert("Tous les champs, y compris le fichier, doivent être remplis !");
+        return;
+    }
+    
+    // Si tous les champs sont remplis, procéder à l'envoi des données
+    const fetchCreation = await fetch('http://localhost:5678/api/works', {
     method: 'POST',
     body: formData,
     headers: {
-      authorization: `Bearer ${localStorage.getItem("token")}`
+        authorization: `Bearer ${localStorage.getItem("token")}`
     }
-  });
-  
-  const data = await fetchCreation.json();
-  let htmlProjets = ``;
+});
 
-  htmlProjets += `<figure data-projet="${data.id}">`;
-  htmlProjets += `<img src="${data.imageUrl}" alt="${data.title}">`;
-  htmlProjets += `<figcaption>${data.title}</figcaption>`;
-  htmlProjets += `</figure>`;
+const data = await fetchCreation.json();
+let htmlProjets = ``;
 
-  document.querySelector(".gallery").innerHTML += htmlProjets;
+htmlProjets += `<figure data-projet="${data.id}">`;
+htmlProjets += `<img src="${data.imageUrl}" alt="${data.title}">`;
+htmlProjets += `<figcaption>${data.title}</figcaption>`;
+htmlProjets += `</figure>`;
 
-  console.log(data);
+document.querySelector(".gallery").innerHTML += htmlProjets;
 
-  closeModal();
+console.log(data);
+
+closeModal();
 });
 
 
@@ -211,11 +192,8 @@ const arrow = document.getElementById('arrow');
 
 arrow.addEventListener('click', function(event) {
     event.preventDefault();
-    if (isModalOpen) {
-        closeModal(event);
-    }
-    openmodale(event)
-    });
+    openModale(event)
+});
 
 
 
