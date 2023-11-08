@@ -2,6 +2,7 @@ let modal = null
 const focusableSelector = 'button, a, input, textarea'
 let focusables = []
 let previouslyFocusedElement = null
+let isModalOpen = false;
 
 
 if (!window.localStorage.getItem("token")) {
@@ -12,35 +13,64 @@ if (!window.localStorage.getItem("token")) {
     displayAdmin.remove()    
 }
 
+// const openmodale = async function (event) {
+//     if (modal !== null){
+//         closeModal();
+//     }
+//     event.preventDefault()
+//     modal = document.querySelector(event.target.getAttribute('href'))
+//     loadModal()
+//     focusables = Array.from(modal.querySelectorAll(focusableSelector))
+//     previouslyFocusedElement = document.querySelector(':focus')
+//     modal.style.display = null
+//     focusables[0].focus()
+//     // modal.setAttribute('aria-hidden', false) // target.removeAttribute('aria-hidden')
+//     // modal.setAttribute('aria-modal', 'true')
+//     modal.addEventListener('click', closeModal)
+//     modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
+//     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
+// }
+
 const openmodale = async function (event) {
-    if (modal !== null){
+    if (isModalOpen) {
         closeModal();
     }
-    event.preventDefault()
-    modal = document.querySelector(event.target.getAttribute('href'))
-    loadModal()
-    focusables = Array.from(modal.querySelectorAll(focusableSelector))
-    previouslyFocusedElement = document.querySelector(':focus')
-    modal.style.display = null
-    focusables[0].focus()
-    // modal.setAttribute('aria-hidden', false) // target.removeAttribute('aria-hidden')
-    // modal.setAttribute('aria-modal', 'true')
-    modal.addEventListener('click', closeModal)
-    modal.querySelector('.js-modal-close').addEventListener('click', closeModal)
-    modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation)
-}
+    event.preventDefault();
+
+    modal = document.querySelector(event.target.getAttribute('href'));
+    if (modal !== null) {
+        loadModal();
+
+        // Reste du code pour ouvrir la modal
+        focusables = Array.from(modal.querySelectorAll(focusableSelector));
+        previouslyFocusedElement = document.querySelector(':focus');
+        modal.style.display = null;
+        focusables[0].focus();
+        // modal.setAttribute('aria-hidden', false) // target.removeAttribute('aria-hidden')
+        // modal.setAttribute('aria-modal', 'true')
+        modal.addEventListener('click', closeModal);
+        modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
+        modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
+    }
+    isModalOpen = true;
+};
+
 
 const closeModal = function (event) {
-    if (modal === null) return
-    if (previouslyFocusedElement !== null) previouslyFocusedElement.focus()
-    if (event !== undefined) event.preventDefault();
-    modal.style.display = "none"
-    // modal.setAttribute('aria-hidden', 'true')
-    // modal.removeAttribute('aria-modal')
-    modal.removeEventListener('click', closeModal)
-    modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
-    modal.querySelector('.js-modal-stop').removeEventListener('click', closeModal)
-    modal = null
+    if (modal !== null) {
+        if (modal === null) return
+        if (previouslyFocusedElement !== null) previouslyFocusedElement.focus()
+        if (event !== undefined) event.preventDefault();
+        modal.style.display = "none"
+        // modal.setAttribute('aria-hidden', 'true')
+        // modal.removeAttribute('aria-modal')
+        modal.removeEventListener('click', closeModal)
+        modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
+        modal.querySelector('.js-modal-stop').removeEventListener('click', closeModal)
+        isModalOpen = false;
+        modal = null;
+    }
+
     
 }
 
@@ -174,4 +204,21 @@ form.addEventListener('submit', async function(event) {
 
   closeModal();
 });
+
+
+
+const arrow = document.getElementById('arrow');
+
+arrow.addEventListener('click', function(event) {
+    event.preventDefault();
+    if (isModalOpen) {
+        closeModal(event);
+    }
+    openmodale(event)
+    });
+
+
+
+
+
 
