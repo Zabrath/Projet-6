@@ -121,7 +121,23 @@ utilisationFiltre();
 
 
 // ======================================================================================  //
-//                         LOGIN                                                          //
+//                         LOGOUT INDEX                                                    //
 // ===================================================================================== //
 
-
+document.addEventListener("DOMContentLoaded", function() {
+	const logout = document.getElementById("logout");
+	const token = localStorage.getItem("token");
+  
+	if (token) {
+		logout.textContent = "Logout";
+  
+		logout.addEventListener("click", function(event) {
+			event.preventDefault();
+  
+			localStorage.removeItem("token");
+			
+  
+			window.location.reload();
+		});
+	}
+  });
