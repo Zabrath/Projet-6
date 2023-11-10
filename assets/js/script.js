@@ -11,19 +11,15 @@ const filtres = document.querySelector(".filtres")
 // Déclaration de la fonction asynchrone (await donc obligation Async)
 async function fetchData(URL) {
 	
-	
-	// Effectue une requête GET sur l'API
 	const response = await fetch(URL);
-	
-	// Retourne les données renvoyées par l'API
 	return await response.json();
 }
 
-/* Fonction pour extraire et appliquer les informations de la BDD au front-end. */
+// Fonction pour extraire et appliquer les informations de la BDD au front-end.
 async function affichageWorks(){
-	// Appel de la fonction asynchrone
+	
 	const data = await fetchData("http://localhost:5678/api/works");
-	// Permet d'isoler chaque élément du tableau
+	
 	let htmlProjets = ``;
 	data.forEach((element) => {  
 		htmlProjets += `<figure data-projet="${element.id}">`;
@@ -37,7 +33,7 @@ async function affichageWorks(){
 	
 }
 
-// Appel de la fonction affichageWorks() après que les éléments du DOM ont été chargés
+// Appel de la fonction affichageWorks() après que les éléments du DOM aient été chargés
 affichageWorks();
 
 
@@ -47,11 +43,11 @@ affichageWorks();
 // ===================================================================================== //
 
 async function createFiltres() {
-	// Appel de la fonction asynchrone
+
 	const data = await fetchData("http://localhost:5678/api/categories");
-	// Création d'une variable affichages qui contiendra le balisage HTML à afficher
+
 	let affichages = ``;
-	// Ajout d'un bouton radio par défaut pour afficher toutes les œuvres d'art
+
 	affichages += `<input type="radio" name="radio" class="filtre-radio" id="0" checked>`;
 	affichages += `<label for="0">Tous</label>`;
 	
@@ -71,13 +67,13 @@ async function createFiltres() {
 
 // Fonction asynchrone qui affiche les œuvres d'art d'une catégorie donnée
 async function affichageWorksFilters(id) {
-	// Appel de la fonction asynchrone
+	
 	const data = await fetchData("http://localhost:5678/api/works");
-	// Création d'une variable affichages qui contiendra le balisage HTML à afficher
+	
 	let htmlFiltres = ``;
-	// Filtrage des données en fonction de l'ID de la catégorie sélectionnée
+	
 	data.filter((dataFiltre) => dataFiltre.categoryId == id)
-	// Parcours des données filtrées et ajout des œuvres d'art au balisage HTML
+	
 	.forEach((categorieFiltre) => {
 		htmlFiltres += `<figure>`;
 		htmlFiltres += `<img src="${categorieFiltre.imageUrl}" alt="${categorieFiltre.title}">`;
@@ -90,24 +86,22 @@ async function affichageWorksFilters(id) {
 }
 
 async function utilisationFiltre() {
-	// Appel de la fonction asynchrone
+	
 	await createFiltres();
 	
 	
-	// Sélection de tous les éléments input du DOM qui ont une classe "filtres"
+	
 	let selectionDesFiltres = document.querySelectorAll(".filtres input");
-	// Parcours de la variable selectionDesFiltres et ajout d'un événement click à chaque élément input
+	
 	selectionDesFiltres.forEach((btn) => {
-		// Ajout d'un événement click à l'élément input
+		
 		btn.addEventListener("click", async function () {
-			// Récupération de l'ID de la catégorie sélectionnée
+			
 			let id = btn.id;
-			// Appel de la fonction appropriée pour afficher les œuvres d'art
+			
 			if (id == 0) {
-				// Appel de la fonction affichageWorks() pour afficher toutes les œuvres d'art
 				affichageWorks();
-			} else {
-				// Appel de la fonction affichageWorksFilters() pour afficher les œuvres d'art qui appartiennent à la catégorie sélectionnée
+			} else {				
 				affichageWorksFilters(id);
 			}
 		});
@@ -127,17 +121,17 @@ utilisationFiltre();
 document.addEventListener("DOMContentLoaded", function() {
 	const logout = document.getElementById("logout");
 	const token = localStorage.getItem("token");
-  
+	
 	if (token) {
 		logout.textContent = "Logout";
-  
+		
 		logout.addEventListener("click", function(event) {
 			event.preventDefault();
-  
+			
 			localStorage.removeItem("token");
 			
-  
+			
 			window.location.reload();
 		});
 	}
-  });
+});

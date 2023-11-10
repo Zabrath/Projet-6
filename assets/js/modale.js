@@ -4,6 +4,9 @@ let focusables = []
 let previouslyFocusedElement = null
 let isModalOpen = false;
 
+// ======================================================================================  //
+//                         GESTION ADMIN                                                  //
+// ===================================================================================== //
 
 if (!window.localStorage.getItem("token")) {
     
@@ -12,6 +15,10 @@ if (!window.localStorage.getItem("token")) {
     const displayAdmin = document.querySelector('.admin-overlay')
     displayAdmin.remove()    
 }
+
+// ======================================================================================  //
+//                         GESTION MODALE                                                 //
+// ===================================================================================== //
 
 const openModale = async function (event) {
     if (isModalOpen) {
@@ -27,8 +34,8 @@ const openModale = async function (event) {
         previouslyFocusedElement = document.querySelector(':focus');
         modal.style.display = null;
         focusables[0].focus();
-        // modal.setAttribute('aria-hidden', false) // target.removeAttribute('aria-hidden')
-        // modal.setAttribute('aria-modal', 'true')
+        modal.setAttribute('aria-hidden', false)
+        modal.setAttribute('aria-modal', 'true')
         modal.addEventListener('click', closeModal);
         modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
         modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
@@ -36,6 +43,7 @@ const openModale = async function (event) {
     isModalOpen = true;
 };
 
+// Gestion de la fermeture de la modale 
 
 const closeModal = function (event) {
     if (modal !== null) {
@@ -43,8 +51,8 @@ const closeModal = function (event) {
         if (previouslyFocusedElement !== null) previouslyFocusedElement.focus()
         if (event !== undefined) event.preventDefault();
         modal.style.display = "none"
-        // modal.setAttribute('aria-hidden', 'true')
-        // modal.removeAttribute('aria-modal')
+        modal.setAttribute('aria-hidden', 'true')
+        modal.removeAttribute('aria-modal')
         modal.removeEventListener('click', closeModal)
         modal.querySelector('.js-modal-close').removeEventListener('click', closeModal)
         modal.querySelector('.js-modal-stop').removeEventListener('click', closeModal)
@@ -55,10 +63,11 @@ const closeModal = function (event) {
     
 }
 
+// comportement modale ouverte 
 const stopPropagation = function (event) {
     event.stopPropagation()
 }
-
+// Navigation clavier au sein de la modale
 const focusInModal = function (event) {
     event.preventDefault()    
     let index = focusables.findIndex(f => f === modal.querySelector(':focus'))
@@ -76,7 +85,7 @@ const focusInModal = function (event) {
     }
     focusables[index].focus()
 }
-
+// Création et intégration dynamique des données de l'API dans la modale
 const loadModal = async function () {
     const reponse = await fetch("http://localhost:5678/api/works");  
     const tableau = await reponse.json();    
@@ -91,6 +100,7 @@ const loadModal = async function () {
     });
     
     document.querySelector(".modal-wrapper_img").innerHTML = galleryModale;
+    // Suppression des données de l'API via le "modifier" admin
     
     const button = document.querySelectorAll('i');
     
@@ -118,11 +128,12 @@ const loadModal = async function () {
     })
 })}
 
+// event au click sur tous les element "js-modal"
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', openModale)
     
 })
-
+// Gestion des touches clavier
 window.addEventListener('keydown', function (event) {
     if (event.key === "Escape" || event.key === "Esc") {
         closeModal(event)
@@ -133,7 +144,9 @@ window.addEventListener('keydown', function (event) {
     }
 })
 
-// Ajout photo
+// ======================================================================================  //
+//                         GESTION DE L'AJOUT PHOTO                                       //
+// ===================================================================================== //
 
 const form = document.getElementById('Myform');
 
@@ -171,6 +184,8 @@ form.addEventListener('submit', async function(event) {
     }
 });
 
+//mise en forme HTML des éléments
+
 const data = await fetchCreation.json();
 let htmlProjets = ``;
 
@@ -187,6 +202,9 @@ closeModal();
 });
 
 
+// ======================================================================================  //
+//                         GESTION FLECHE                                                 //
+// ===================================================================================== //
 
 const arrow = document.getElementById('arrow');
 

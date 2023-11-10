@@ -1,11 +1,12 @@
-// // sophie.bluel@test.tld S0phie 
 
 // Récupération des éléments du formulaire
 const formulaireLogin = document.querySelector(".JS-formulaire-login");
 const email = document.querySelector("#mail");
 const password = document.querySelector("#pass");
-// const admin = document.getElementById('admin_test');
 
+// ======================================================================================  //
+//                         GESTION LOGIN                                                  //
+// ===================================================================================== //
 
 formulaireLogin.addEventListener("submit", async function (event){
   
@@ -47,7 +48,9 @@ if (data.hasOwnProperty("token")) {
 }
 });
 
-// Logout page login
+// ======================================================================================  //
+//                         GESTION LOGOUT                                                 //
+// ===================================================================================== //
 
 document.addEventListener("DOMContentLoaded", function() {
   const logout = document.getElementById("logout");
