@@ -128,7 +128,6 @@
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
-    padding: 15px;
 }
 
 .sectionAjout {
@@ -139,6 +138,20 @@
     margin-bottom: 30px;
     display: flex;
     justify-content: center;
+}
+
+.sectionAjout label {
+    position: relative;
+}
+
+.miniature {
+    position: absolute;
+
+    height: 100%;
+    top: 0;
+
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .sectionAjout__svg {
@@ -221,3 +234,4 @@
 .modal2-wrapper__fleche{
     padding: 15px;
 }
+

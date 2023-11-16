@@ -100,12 +100,11 @@ const loadModal = async function () {
     });
     
     document.querySelector(".modal-wrapper_img").innerHTML = galleryModale;
-    // Suppression des données de l'API via le "modifier" admin
     
-    const button = document.querySelectorAll('i');
+    const button = document.querySelectorAll('i.fa-trash-can');
     
     button.forEach(function(boutonDOM) {
-        boutonDOM.addEventListener('click', function(event){
+        boutonDOM.addEventListener('click', function(){
             // Je récupère l'ID du projet acollé au bouton
             let projetID = boutonDOM.parentNode.dataset.projet;
             // Requête API pour delete le projet ayant le projetID
@@ -177,30 +176,46 @@ form.addEventListener('submit', async function(event) {
     
     // Si tous les champs sont remplis, procéder à l'envoi des données
     const fetchCreation = await fetch('http://localhost:5678/api/works', {
-    method: 'POST',
-    body: formData,
-    headers: {
-        authorization: `Bearer ${localStorage.getItem("token")}`
-    }
-});
+        method: 'POST',
+        body: formData,
+        headers: {
+            authorization: `Bearer ${localStorage.getItem("token")}`
+        }
+    });
 
 //mise en forme HTML des éléments
 
-const data = await fetchCreation.json();
-let htmlProjets = ``;
+    const data = await fetchCreation.json();
+    let htmlProjets = ``;
 
-htmlProjets += `<figure data-projet="${data.id}">`;
-htmlProjets += `<img src="${data.imageUrl}" alt="${data.title}">`;
-htmlProjets += `<figcaption>${data.title}</figcaption>`;
-htmlProjets += `</figure>`;
+    htmlProjets += `<figure data-projet="${data.id}">`;
+    htmlProjets += `<img src="${data.imageUrl}" alt="${data.title}">`;
+    htmlProjets += `<figcaption>${data.title}</figcaption>`;
+    htmlProjets += `</figure>`;
 
-document.querySelector(".gallery").innerHTML += htmlProjets;
+    document.querySelector(".gallery").innerHTML += htmlProjets;
 
-console.log(data);
-
-closeModal();
+    closeModal();
 });
 
+// ======================================================================================  //
+//                         GESTION CHAMP IMAGE                                            //
+// ===================================================================================== //
+const champImage = document.getElementById('travaux');
+
+champImage.addEventListener('change', function(){
+    
+    const reader = new FileReader();
+    reader.onload = function(e){
+        const labelImage = document.querySelector('.sectionAjout label');
+        const imgUpload = document.createElement('img');
+        imgUpload.classList.add('miniature')
+        imgUpload.src = e.target.result;
+        labelImage.appendChild(imgUpload)
+    }
+    reader.readAsDataURL(champImage.files[0]);   
+
+});
 
 // ======================================================================================  //
 //                         GESTION FLECHE                                                 //
