@@ -22,6 +22,9 @@
 }
 
 .modal-wrapper {
+    position: relative;
+    padding: 40px 90px;
+    box-sizing: border-box;
     overflow: auto;
     width: 630px;
     height: 688px;
@@ -34,6 +37,9 @@
 }
 
 .modal-wrapper__close {
+    position: absolute;
+    right: 0;
+    top: 0;
     padding: 15px;
     font-size: 18px;
     display: flex;
@@ -54,11 +60,14 @@
 }
 
 .modal-wrapper_img {
-    padding: 0px 90px;
+    margin-bottom: 38px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 7px;
+    gap: 25px 5px;
+    flex: 1;
+    align-content: flex-start;
+    border-bottom: 1px solid #B3B3B3;   
 
 }
 
@@ -73,10 +82,10 @@
 .vignette__img {
     max-width: 100%; 
     height: auto;
-
+    object-fit: cover;
  
-    width: 83.163px;
-    height: 110.884px;
+    width: 83px;
+    height: 110px;
     
 }
 
@@ -103,13 +112,14 @@
     background: #1D6154;
     color: #FFF;
     text-decoration: none;
-
+    flex: none;
     text-align: center;
     font-family: 'Syne';
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    
 }
 
 // modal2
@@ -121,6 +131,9 @@
     flex-wrap: wrap;
     font-family: 'Work Sans';
     gap: 5px;
+    flex: 1;
+    border-bottom: 1px solid #B3B3B3;
+    margin-bottom: 38px;
     
 }
 
@@ -229,6 +242,8 @@
     line-height: normal;
     margin: auto;
 
+
+
 }
 
 .btn-valid {
@@ -237,6 +252,9 @@
 
 
 .modal2-wrapper__fleche{
+    position: absolute;
+    left: 0;
+    top: 0;
     padding: 15px;
 }
 
