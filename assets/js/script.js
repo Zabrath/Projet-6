@@ -42,23 +42,52 @@ affichageWorks();
 //                                 FILTRES                                                //
 // ===================================================================================== //
 
+// async function createFiltres() {
+
+// 	const data = await fetchData("http://localhost:5678/api/categories");
+
+// 	let affichages = ``;
+
+// 	affichages += `<input type="radio" name="radio" class="filtre-radio" id="0" checked>`;
+// 	affichages += `<label for="0">Tous</label>`;
+	
+// 	// Ajout des filtres dynamiques
+// 	data.forEach((element) => {
+// 		affichages += `<input type="radio" name="radio" class="filtre-radio" id="${element.id}">`;
+// 		affichages += `<label for="${element.id}">${element.name}</label>`;
+// 	});
+	
+// 	// Ajout du balisage HTML au DOM
+// 	document.querySelector(".filtres").innerHTML = affichages;
+// }
+
 async function createFiltres() {
+    // Vérifier la présence du token dans le localStorage
+    const token = localStorage.getItem("token");
+    const showFilters = !token; // Afficher les filtres si le token n'est pas présent
 
-	const data = await fetchData("http://localhost:5678/api/categories");
+    // Si le token est présent, vous pouvez choisir de ne pas afficher les filtres
+    if (!showFilters) {
+        // Peut-être vous voulez ajouter un message ou effectuer une autre action
+        console.log("Token présent, filtres non affichés.");
+        return;
+    }
 
-	let affichages = ``;
+    const data = await fetchData("http://localhost:5678/api/categories");
 
-	affichages += `<input type="radio" name="radio" class="filtre-radio" id="0" checked>`;
-	affichages += `<label for="0">Tous</label>`;
-	
-	// Ajout des filtres dynamiques
-	data.forEach((element) => {
-		affichages += `<input type="radio" name="radio" class="filtre-radio" id="${element.id}">`;
-		affichages += `<label for="${element.id}">${element.name}</label>`;
-	});
-	
-	// Ajout du balisage HTML au DOM
-	document.querySelector(".filtres").innerHTML = affichages;
+    let affichages = ``;
+
+    affichages += `<input type="radio" name="radio" class="filtre-radio" id="0" checked>`;
+    affichages += `<label for="0">Tous</label>`;
+
+    // Ajout des filtres dynamiques
+    data.forEach((element) => {
+        affichages += `<input type="radio" name="radio" class="filtre-radio" id="${element.id}">`;
+        affichages += `<label for="${element.id}">${element.name}</label>`;
+    });
+
+    // Ajout du balisage HTML au DOM
+    document.querySelector(".filtres").innerHTML = affichages;
 }
 
 // ======================================================================================  //

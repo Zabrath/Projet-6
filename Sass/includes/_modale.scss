@@ -92,7 +92,7 @@
 }
 
 .ajout__btn{
-    position: relative;
+    
     display: flex;
     align-items: center;
     justify-content: center;
@@ -230,6 +230,11 @@
     margin: auto;
 
 }
+
+.btn-valid {
+    background: #1D6154;
+}
+
 
 .modal2-wrapper__fleche{
     padding: 15px;

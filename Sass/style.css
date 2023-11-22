@@ -12,7 +12,7 @@ form a {
 }
 
 footer {
-  background-color: #FFFEF8;
+  background-color: #FFFFFF;
   height: 60px;
 }
 
@@ -114,7 +114,6 @@ footer nav ul {
 }
 
 .ajout__btn {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -243,6 +242,10 @@ footer nav ul {
   font-weight: 700;
   line-height: normal;
   margin: auto;
+}
+
+.btn-valid {
+  background: #1D6154;
 }
 
 .modal2-wrapper__fleche {

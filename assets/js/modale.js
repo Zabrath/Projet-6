@@ -13,7 +13,8 @@ if (!window.localStorage.getItem("token")) {
     const adminBtn = document.querySelector('.admin-btn');
     adminBtn.remove();
     const displayAdmin = document.querySelector('.admin-overlay')
-    displayAdmin.remove()    
+    displayAdmin.remove()   
+     
 }
 
 // ======================================================================================  //
@@ -58,6 +59,8 @@ const closeModal = function (event) {
         modal.querySelector('.js-modal-stop').removeEventListener('click', closeModal)
         isModalOpen = false;
         modal = null;
+        btnValider.classList.remove('btn-valid');
+        resetForm();
     }
     
     
@@ -182,6 +185,8 @@ form.addEventListener('submit', async function(event) {
             authorization: `Bearer ${localStorage.getItem("token")}`
         }
     });
+    
+    
 
 //mise en forme HTML des éléments
 
@@ -195,8 +200,52 @@ form.addEventListener('submit', async function(event) {
 
     document.querySelector(".gallery").innerHTML += htmlProjets;
 
+
+    resetForm();
     closeModal();
 });
+
+function resetForm() {
+    form.reset();
+
+    const labelImage = document.querySelector('.sectionAjout label');
+    const miniature = document.querySelector('.miniature');
+    if (miniature) {
+        labelImage.removeChild(miniature);
+    }
+}
+
+
+const btnValider = document.querySelector('.travaux__btnValider');
+
+// Fonction pour vérifier si le formulaire est rempli
+function checkFormValidity() {
+    const formData = new FormData(form);
+    let isFormValid = true;
+
+    for (let value of formData.values()) {
+        if (!value) {
+            isFormValid = false;
+            break;
+        }
+    }
+
+    const travaux = document.getElementById('travaux');
+    if (!travaux.files.length) {
+        isFormValid = false;
+    }
+
+    // Ajouter ou retirer la classe en fonction de la validité du formulaire
+    if (isFormValid) {
+        btnValider.classList.add('btn-valid');
+    } else {
+        btnValider.classList.remove('btn-valid');
+    }
+}
+
+// Écouter les changements dans le formulaire
+form.addEventListener('input', checkFormValidity);
+
 
 // ======================================================================================  //
 //                         GESTION CHAMP IMAGE                                            //
